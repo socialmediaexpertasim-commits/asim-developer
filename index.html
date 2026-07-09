@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Early mitigation for benign cross-origin sandbox and ResizeObserver script errors
+      window.onerror = function(message, source, lineno, colno, error) {
+        var msg = String(message || '');
+        if (
+          msg.indexOf('Script error') > -1 || 
+          msg.indexOf('ResizeObserver') > -1 ||
+          msg.toLowerCase().indexOf('script error') > -1
+        ) {
+          return true; // Suppress reporting
+        }
+        return false;
+      };
+
+      window.addEventListener('error', function(e) {
+        var msg = e.message || '';
+        if (
+          msg.indexOf('Script error') > -1 || 
+          msg.indexOf('ResizeObserver') > -1 ||
+          msg.toLowerCase().indexOf('script error') > -1 ||
+          !e.filename
+        ) {
+          e.preventDefault();
+          e.stopPropagation();
+          return true;
+        }
+      }, true);
+
+      window.addEventListener('unhandledrejection', function(e) {
+        var reason = e.reason || {};
+        var msg = reason.message || '';
+        if (msg.indexOf('ResizeObserver') > -1 || msg.indexOf('Script error') > -1) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+    </script>
+    <title>My Google AI Studio App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,6 @@
+{
+  "name": "Compressly Image",
+  "description": "A professional-grade, privacy-first image compressor. Compress, resize, and convert JPEG, PNG, and WebP images directly in your browser with real-time splitting preview.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
